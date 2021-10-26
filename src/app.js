@@ -2,6 +2,8 @@ const request = require('request')
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+const { resolve } = require('path')
+
 
 
 const app = express()
@@ -18,39 +20,46 @@ app.get('/',(req, res)=>{
     res.render('index')
 })
 
-app.post('/home',(req, res)=>{
+const promise = new Promise((resolve, reject)=>{
+    
+    request({url: `http://api.weatherstack.com/current?access_key=5b8a3c041a96a0ee70ea4a9729fa883e&query=Delhi`},(error, response)=>{
+        if(response){
+           const resultData = JSON.parse(response.body)
+           resolve(resultData)
+        }    
+        else{
+           reject('Content not found')
+        }
+
+    })
+})
+
+
+app.post('/home',async(req, res)=>{    
+    const data = await promise
+
     let dataArray = []
-    const location = req.body.cityName;
-    const url = `http://api.weatherstack.com/current?access_key=5b8a3c041a96a0ee70ea4a9729fa883e&query=${location}`
-
-    request({url: url},(error, response)=>{
     
+    const address = {
+        city : data.location.name,
+        region : data.location.region,
+        country : data.location.country
+    }
 
-        // storing whole json body into data variable
-        const data = JSON.parse(response.body)
-       // console.log(data)
-        
-        const address = {
-            city : data.location.name,
-            region : data.location.region,
-            country : data.location.country
-        }
+    const weather = {
+        temperature : data.current.temperature,
+        wind_speed : data.current.wind_speed,
+        wind_degree : data.current.wind_degree
+    }
+    dataArray.push(address)
+    dataArray.push(weather)
+    
+    finalArray = JSON.stringify(dataArray)
+    res.render('home',{info : finalArray})
 
-        const weather = {
-            temperature : data.current.temperature,
-            wind_speed : data.current.wind_speed,
-            wind_degree : data.current.wind_degree
-        }
-        dataArray.push(address)
-        dataArray.push(weather)
-        
-        finalArray = JSON.stringify(dataArray)
-        res.render('home',{info : finalArray})
-        
 })
 
-    
-})
+
 app.listen(port,()=>{
     console.log(`server is running on port no ${port}`);
 })
