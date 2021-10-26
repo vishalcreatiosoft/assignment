@@ -56,7 +56,7 @@ app.post('/home',async(req, res)=>{
     dataArray.push(address)
     dataArray.push(weather)
     
-    finalArray = JSON.stringify(dataArray)
+    let finalArray = JSON.stringify(dataArray)
     res.render('home',{info : finalArray})
 
 })
