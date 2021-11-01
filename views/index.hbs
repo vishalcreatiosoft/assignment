@@ -5,27 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="/css/style.css"
 </head>
 <body>
     <div class="row">
-        <div class="left_section"></div>
-        <div class="middle_section">
-            <h1>Welcome to Weather App</h1>
+        <div class="left-column">
+            <h1>Online Weather Search</h1>
             
             <form action="/home"  method="POST" class="search_form">
-                {{!-- <input type="text" name="cityName" placeholder="Enter city name.." id="search_box"><br> --}}
-                <button type="submit" value="Submit" class="search_button">Search</button>
+                <input type="text" name="cityName" placeholder="Enter city name.." class="search_box"><br><br>
+                <button type="submit" value="Submit" class="search_button">Online Search</button>
 
             </form>
+        </div>
+        <div class="right-column">
+            <h1>Offline Weather search</h1>
+            <form action="/offlineHome"  method="POST" class="search_form">
+                <input type="text" name="cityName" placeholder="Enter city " class="search_box"><br><br>
+                <button type="submit" value="Submit" class="search_button">Offline Search</button>
 
+            </form>
                    
         </div> 
-        <div class="right_section">
-                
-                
-            
-        </div>   
+         
 
     </div>
 

@@ -48,7 +48,8 @@ const newWindDegree = document.createElement('h3')
 newWindDegree.textContent = `Wind Degree is ${wind_degree}`
 document.querySelector('body').appendChild(newWindDegree)
 
-
+data.remove()
+newParagraph.remove()
 
 
 //Accessing all the cities in Array
