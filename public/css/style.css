@@ -41,3 +41,7 @@ body{
     color: white;
     border-radius: 10px;
 }
+
+h3,p{
+    text-align: center;
+}
